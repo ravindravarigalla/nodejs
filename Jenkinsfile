@@ -58,7 +58,7 @@ spec:
           sh "gcloud auth list"
           sh "curl -fsSL https://get.docker.com -o get-docker.sh"
           sh "sh get-docker.sh"
-          sh "export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock"
+          sh "ssh -L /path/to/docker.sock:/var/run/docker.sock"
           sh "docker build -t my-image . " 
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
