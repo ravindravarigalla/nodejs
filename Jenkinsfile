@@ -47,8 +47,8 @@ spec:
     stage('Test') {
       steps {
         container('nodejs') {
-          sh "npm install"
-          sh "npm test"
+          sh "#npm install"
+          sh "#npm test"
         }
       }
     }
@@ -56,9 +56,9 @@ spec:
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh " curl -fsSL https://get.docker.com -o get-docker.sh"
-          sh "sh get-docker.sh"
-          sh "systemctl enable docker"
+          sh " #curl -fsSL https://get.docker.com -o get-docker.sh"
+          sh "#sh get-docker.sh"
+          sh "service enable docker"
           sh "docker build -t my-image . " 
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
