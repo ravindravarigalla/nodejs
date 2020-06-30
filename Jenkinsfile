@@ -24,10 +24,6 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
-  - name: docker
-    image: gustavoapolinario/jenkins-docker
-    command:
-    - cat
   - name: nodejs
     image: node:10.11.0-alpine
     command:
@@ -58,13 +54,8 @@ spec:
     }
     stage('Build and push image with Container Builder') {
       steps {
-        container('gcloud') {
-          sh "gcloud auth list"
-          sh " #curl -fsSL https://get.docker.com -o get-docker.sh"
-          sh "#sh get-docker.sh"
-          sh "#chmod 777 /var/run/docker.sock"
-          sh "docker build -t my-image . " 
-          sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
