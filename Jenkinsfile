@@ -56,8 +56,9 @@ spec:
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh " curl -fsSL https://get.docker.com -o get-docker.sh"
-          sh "sh get-docker.sh"
+          sh "curl -fsSL https://get.docker.com/rootless | sh"
+          sh "export PATH=/home/testuser/bin:$PATH"
+          sh "export PATH=$PATH:/sbin"
           sh "docker build -t my-image . " 
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
