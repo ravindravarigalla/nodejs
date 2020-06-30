@@ -24,6 +24,10 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
+  - name: docker
+    image: docker:19.03.1
+    command:
+    - cat
   - name: nodejs
     image: node:10.11.0-alpine
     command:
