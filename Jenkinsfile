@@ -24,10 +24,6 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
-  - name: docker
-    image: docker:19.03.1
-    command:
-    - cat
   - name: nodejs
     image: node:10.11.0-alpine
     command:
@@ -60,7 +56,8 @@ spec:
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh " docker build -t us.gcr.io/still-smithy-279711/nodejs ."
+          sh " curl -fsSL https://get.docker.com -o get-docker.sh"
+          sh "sh get-docker.sh"
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
       }
