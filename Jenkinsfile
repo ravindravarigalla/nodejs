@@ -23,7 +23,7 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
-   - name: docker
+  - name: docker
     image: docker
     command:
     - cat
