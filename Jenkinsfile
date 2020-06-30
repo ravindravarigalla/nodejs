@@ -56,7 +56,7 @@ spec:
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh " docker.build registry + ":$BUILD_NUMBER""
+          sh " docker build -t us.gcr.io/still-smithy-279711/nodejs ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
       }
