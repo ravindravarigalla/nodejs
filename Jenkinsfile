@@ -56,10 +56,20 @@ spec:
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh "curl -fsSL https://get.docker.com -o get-docker.sh"
-          sh "sh get-docker.sh"
           sh  "apt-get update"
-          sh "ssh -L /path/to/docker.sock:/var/run/docker.sock"
+          sh " apt-get install \
+              apt-transport-https \
+              ca-certificates \
+              curl \
+              gnupg-agent \
+              software-properties-common"
+          sh" curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -"
+          sh "add-apt-repository \
+              "deb [arch=amd64] https://download.docker.com/linux/debian \
+               $(lsb_release -cs) \
+               stable" "
+          sh "apt-get update"
+          sh "apt-get install docker-ce docker-ce-cli containerd.io"
           sh "docker build -t my-image . " 
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
