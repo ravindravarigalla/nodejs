@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    PROJECT = "	still-smithy-279711"
+    PROJECT = " still-smithy-279711"
     APP_NAME = "sample"
     FE_SVC_NAME = "${APP_NAME}"
     CLUSTER = "cluster-1"
@@ -9,7 +9,6 @@ pipeline {
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:latest"
     JENKINS_CRED = "${PROJECT}"
   }
-
   agent {
     kubernetes {
       
@@ -24,12 +23,12 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
-  - name: docker
+   - name: docker
     image: docker
     command:
     - cat
     tty: true
-  - name: nodejs
+  - name: golang
     image: node:10.11.0-alpine
     command:
     - cat
@@ -48,22 +47,20 @@ spec:
 """
 }
   }
-  stage('Build') {
+  stages {
+    stage('Test') {
       steps {
-        container('nodejs') {
-          sh "npm install"  
-          }
+        container('golang') {
+          sh "npm install"
+          sh "#npm test"
+        }
       }
     }
-   stage('Build and push image with Container Builder') {
+    stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh " #curl -fsSL https://get.docker.com -o get-docker.sh"
-          sh "#sh get-docker.sh"
-          sh "#chmod 777 /var/run/docker.sock"
-          sh "#docker container run -v /var/run/docker.sock:/var/run/docker.sock ..."
-          sh "docker build -t my-image . " 
+          sh " docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
       }
@@ -85,4 +82,5 @@ spec:
       }
     }
   }
+}
 
