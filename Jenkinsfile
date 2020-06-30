@@ -64,10 +64,6 @@ spec:
               gnupg-agent \
               software-properties-common"
           sh" curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -"
-          sh "add-apt-repository \
-              deb [arch=amd64] https://download.docker.com/linux/debian \
-               $(lsb_release -cs) \
-               stable" "
           sh "apt-get update"
           sh "apt-get install docker-ce docker-ce-cli containerd.io"
           sh "docker build -t my-image . " 
