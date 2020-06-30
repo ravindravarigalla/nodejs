@@ -59,9 +59,7 @@ spec:
           sh " #curl -fsSL https://get.docker.com -o get-docker.sh"
           sh "#sh get-docker.sh"
           sh "#chmod 777 /var/run/docker.sock"
-          sh " sudo groupadd docker"
-          sh " sudo usermod -aG docker $USER"
-          sh " chmod 777 /var/run/docker.sock"
+          sh "gpasswd -a $USER docker"
           sh "docker build -t my-image . " 
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
