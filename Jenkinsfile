@@ -58,7 +58,7 @@ spec:
           sh "gcloud auth list"
           sh " curl -fsSL https://get.docker.com -o get-docker.sh"
           sh "sh get-docker.sh"
-          sh "dockerd"
+          sh "systemctl enable docker"
           sh "docker build -t my-image . " 
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
