@@ -29,6 +29,11 @@ spec:
     command:
     - cat
     tty: true
+  - name: nodejs
+    image: node:10.11.0-alpine
+    command:
+    - cat
+    tty: true
   - name: gcloud
     image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
     command:
@@ -43,7 +48,14 @@ spec:
 """
 }
   }
-    stage('Build and push image with Container Builder') {
+  stage('Build and push image with Container Builder') {
+      steps {
+        container('nodejs') {
+          sh "npm install"  
+          }
+      }
+    }
+   stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
           sh "gcloud auth list"
