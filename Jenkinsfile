@@ -43,15 +43,6 @@ spec:
 """
 }
   }
-  stages {
-    stage('Test') {
-      steps {
-        container('nodejs') {
-          sh "#npm install"
-          sh "#npm test"
-        }
-      }
-    }
     stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
