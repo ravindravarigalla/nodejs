@@ -48,7 +48,7 @@ spec:
 """
 }
   }
-  stage('Build and push image with Container Builder') {
+  stage('Build') {
       steps {
         container('nodejs') {
           sh "npm install"  
