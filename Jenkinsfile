@@ -6,11 +6,12 @@ pipeline {
     FE_SVC_NAME = "${APP_NAME}"
     CLUSTER = "cluster-1"
     CLUSTER_ZONE = "us-central1-c"
+    registry = "magalixcorp/k8scicd"
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:latest"
     JENKINS_CRED = "${PROJECT}"
   }
   agent {
-    kubernetes {
+      any {
       
       defaultContainer 'jnlp'
       yaml """
@@ -51,11 +52,16 @@ spec:
         }
       }
     }
+    stage('Publish') {
+           environment {
+               registryCredential = 'dockerhub'
+           }
     stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh " #docker build -t gg ."
+          sh " docker build -t gg ."
+          sh " def appimage = docker.build registry + ":$BUILD_NUMBER" "
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
       }
