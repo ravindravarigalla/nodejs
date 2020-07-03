@@ -10,7 +10,7 @@ pipeline {
     JENKINS_CRED = "${PROJECT}"
   }
   agent {
-      any {
+    kubernetes {
       
       defaultContainer 'jnlp'
       yaml """
