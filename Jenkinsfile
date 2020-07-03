@@ -56,8 +56,8 @@ spec:
       steps {
         container('gcloud') {
           sh "gcloud auth list"
-          sh "chmod root:docker /var/run/docker.sock"
-          sh " docker build -t gg ."
+          sh "#chmod root:docker /var/run/docker.sock"
+          sh "# docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
       }
@@ -71,7 +71,7 @@ spec:
           kubectl get pods --namespace default
           helm repo add stable https://kubernetes-charts.storage.googleapis.com/ 
           helm repo update 
-          helm install sampleapp sampleapp/ --namespace default
+          helm install sampleapp3 sampleapp/ --namespace default
           helm ls
           kubectl get pods --namespace default
           """ 
