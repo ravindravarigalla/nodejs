@@ -23,12 +23,7 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
-  - name: docker
-    image: docker
-    command:
-    - cat
-    tty: true
-  - name: golang
+  - name: nodejs
     image: node:10.11.0-alpine
     command:
     - cat
@@ -48,9 +43,9 @@ spec:
 }
   }
   stages {
-    stage('Test') {
+    stage('build') {
       steps {
-        container('golang') {
+        container('nodejs') {
           sh "npm install"
           sh "#npm test"
         }
@@ -59,8 +54,8 @@ spec:
     stage('Build and push image with Container Builder') {
       steps {
         container('docker') {
-          sh "#gcloud auth list"
-          sh " docker build -t gg ."
+          sh "gcloud auth list"
+          sh " #docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
       }
@@ -74,7 +69,7 @@ spec:
           kubectl get pods --namespace default
           helm repo add stable https://kubernetes-charts.storage.googleapis.com/ 
           helm repo update 
-          helm install sampleapp2 sampleapp/ --namespace default
+          helm install sampleapp sampleapp/ --namespace default
           helm ls
           kubectl get pods --namespace default
           """ 
