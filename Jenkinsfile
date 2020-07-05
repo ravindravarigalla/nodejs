@@ -28,8 +28,8 @@ spec:
     command:
     - cat
     tty: true
-  - name: gcloud
-    image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
+  - name: docker
+    image: docker:stable
     command:
     - cat
     tty: true
@@ -54,10 +54,10 @@ spec:
     
     stage('Build and push image with Container Builder') {
       steps {
-        container('gcloud') {
+        container('docker') {
           sh "gcloud auth list"
           sh "#chmod root:docker /var/run/docker.sock"
-          sh "# docker build -t gg ."
+          sh "docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
       }
