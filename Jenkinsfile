@@ -42,10 +42,13 @@ spec:
 """
 }
   }
-  stage('Initialize'){
+   stages {
+     stage('Initialize')
+       steps {
         def dockerHome = tool 'myDocker'
         env.PATH = "${dockerHome}/bin:${env.PATH}"
     }
+   }
   stages {
     stage('build') {
       steps {
