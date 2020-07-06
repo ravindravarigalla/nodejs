@@ -57,7 +57,9 @@ spec:
         container('docker') {
           sh "#gcloud auth list"
           sh "#chmod root:docker /var/run/docker.sock"
-          sh "-v $(which docker):/usr/bin/docker"
+          sh "curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz"
+          sh "tar xzvf docker-17.04.0-ce.tgz"
+          sh "mv docker/docker /usr/local/bin"
           sh "docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
