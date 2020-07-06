@@ -28,8 +28,8 @@ spec:
     command:
     - cat
     tty: true
-  - name: docker
-    image: docker:stable
+  - name: gcloud
+    image: us.gcr.io/still-smithy-279711/gcloud
     command:
     - cat
     tty: true
@@ -54,7 +54,7 @@ spec:
     
     stage('Build and push image with Container Builder') {
       steps {
-        container('docker') {
+        container('gcloud') {
           sh "gcloud auth list"
           sh "#chmod root:docker /var/run/docker.sock"
           sh "docker build -t gg ."
