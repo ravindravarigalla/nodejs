@@ -61,6 +61,8 @@ spec:
           sh "curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz"
           sh "tar xzvf docker-17.04.0-ce.tgz"
           sh "mv docker/docker /usr/local/bin"
+          sh "echo “export DOCKER_HOST=‘tcp://0.0.0.0:2375’” >> ~/.bashrc"
+          sh "source ~/.bashrc"
           sh "docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
