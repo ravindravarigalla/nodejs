@@ -23,8 +23,8 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
-  - name: nodejs
-    image: node:10.11.0-alpine
+  - name: docker
+    image: getintodevops/jenkins-withdocker:lts
     command:
     - cat
     tty: true
@@ -42,14 +42,6 @@ spec:
 """
 }
   }
-   stages {
-     stage('Initialize')
-       steps {
-         container ('nodejs') {  
-           sh "def dockerHome = tool 'myDocker'"
-           sh  "env.PATH = "${dockerHome}/bin:${env.PATH}""
-    }
-   }
   stages {
     stage('build') {
       steps {
@@ -62,8 +54,8 @@ spec:
     
     stage('Build and push image with Container Builder') {
       steps {
-        container('gcloud') {
-          sh "gcloud auth list"
+        container('docker') {
+          sh "#gcloud auth list"
           sh "#chmod root:docker /var/run/docker.sock"
           sh "docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
