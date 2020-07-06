@@ -8,6 +8,7 @@ pipeline {
     CLUSTER_ZONE = "us-central1-c"
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:latest"
     JENKINS_CRED = "${PROJECT}"
+    DOCKER_HOST = "tcp://X.X.X.X:2375"
   }
   agent {
     kubernetes {
