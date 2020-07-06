@@ -28,8 +28,8 @@ spec:
     command:
     - cat
     tty: true
-  - name: gcloud
-    image: us.gcr.io/still-smithy-279711/gcloud
+  - name: nodejs
+    image: node:10.11.0-alpine
     command:
     - cat
     tty: true
