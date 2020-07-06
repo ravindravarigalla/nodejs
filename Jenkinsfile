@@ -57,7 +57,8 @@ spec:
         container('docker') {
           sh "#gcloud auth list"
           sh "#chmod root:docker /var/run/docker.sock"
-          sh "docker run -p 8080:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkins"
+          sh "docker run -d -v /var/run/docker.sock:/var/run/docker.sock \
+              -v $(which docker):/usr/bin/docker -p 8088:8088 jenkins-docker"
           sh "docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
