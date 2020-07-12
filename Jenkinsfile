@@ -1,14 +1,13 @@
 pipeline {
 
   environment {
-    PROJECT = " still-smithy-279711"
+    PROJECT = "hypnotic-bounty-282512 "
     APP_NAME = "sample"
     FE_SVC_NAME = "${APP_NAME}"
     CLUSTER = "cluster-1"
     CLUSTER_ZONE = "us-central1-c"
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:latest"
-    JENKINS_CRED = "${PROJECT}"
-    DOCKER_HOST = "tcp://0.0.0.0:2375"
+    JENKINS_CRED = "${PROJECT}
   }
   agent {
     kubernetes {
@@ -66,7 +65,7 @@ spec:
         container('helm') {
           sh """
           #helm ls
-          gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project still-smithy-279711
+          gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project hypnotic-bounty-282512 
           kubectl get pods --namespace default
           helm repo add stable https://kubernetes-charts.storage.googleapis.com/ 
           helm repo update 
