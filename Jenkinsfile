@@ -25,7 +25,7 @@ spec:
   
   containers:
   - name: docker
-    image: getintodevops/jenkins-withdocker:lts
+    image: docker:1.12.6 
     command:
     - cat
     tty: true
@@ -56,12 +56,6 @@ spec:
     stage('Build and push image with Container Builder') {
       steps {
         container('docker') {
-          sh "#gcloud auth list"
-          sh "#chmod root:docker /var/run/docker.sock"
-          sh "curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz"
-          sh "tar xzvf docker-17.04.0-ce.tgz"
-          sh "mv docker/docker /usr/local/bin"
-          sh "echo “export DOCKER_HOST=‘tcp://0.0.0.0:2375’” >> ~/.bashrc"
           sh "docker build -t gg ."
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t  us.gcr.io/still-smithy-279711/nodejs . "
         }
