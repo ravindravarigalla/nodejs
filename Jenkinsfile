@@ -33,11 +33,6 @@ spec:
     command:
     - cat
     tty: true
-  - name: helm
-    image: us.gcr.io/still-smithy-279711/helm3
-    command:
-    - cat
-    tty: true
     
 """
 }
