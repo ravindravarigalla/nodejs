@@ -23,8 +23,8 @@ spec:
   # Use service account that can deploy to all namespaces
   
   containers:
-  - name: docker
-    image: docker:1.12.6 
+  - name: nodejs
+    image: nodealpine
     command:
     - cat
     tty: true
@@ -41,8 +41,8 @@ spec:
     stage('build') {
       steps {
         container('nodejs') {
-          sh "#npm install"
-          sh "#npm test"
+          sh " npm install"
+          sh "npm test"
         }
       }
     }
@@ -72,5 +72,3 @@ spec:
       }
     }
   }
-}
-
